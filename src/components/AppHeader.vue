@@ -7,7 +7,8 @@ export default {
     data() {
         return {
             store,
-            filmUtente: ""
+            filmUtente: "",
+            serieUtente: ""
         }
     },
     methods: {
@@ -17,14 +18,24 @@ export default {
                 const risposta = risp.data.results
                 console.log(risposta)
                 this.store.films = risposta
-                console.log("mio", this.store.films)
+                console.log("mio film", this.store.films)
 
-
-
-
+                // this.store.apiSeriesUrl = 'https://api.themoviedb.org/3/search/tv?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.serieUtente
+                // axios.get(this.store.apiSeriesUrl).then((risp) => {
+                //     const risposta = risp.data.results
+                //     console.log(risposta)
+                //     this.store.series = risposta
+                //     console.log("mio serie", this.store.series)
+                // })
             })
+        },
+        seriesGen() {
+
         }
 
+    },
+    mounted() {
+        console.log(this.prova);
     }
 }
 
@@ -32,15 +43,11 @@ export default {
 <template>
     <section>
         <div class="head">
-            <img src="" alt="">
             <h1>Boolflix</h1>
-            <!-- prendo il valore della select attraverso il v-model per poterlo inserire nell'archetipoSelezionato dichiarato nel data sopra -->
-            <select class="select">
-                <!-- ciclo sul mio array precedentemente popolato e popolo le option con tutti i nomi degli archetipi presenti in quell'array -->
-                <option>Tutti</option>
-            </select>
-            <input v-model="filmUtente" type="text" placeholder="cerca il film">
-            <button @click="filmGen()">Clicca per generare i film</button>
+            <div class="inputContainer">
+                <input @keyup="filmGen" v-model="filmUtente" type="text" placeholder="cerca il film">
+                <button @click="filmGen()">Clicca per cercare i film</button>
+            </div>
         </div>
     </section>
 </template>
@@ -49,6 +56,7 @@ export default {
     display: flex;
     padding: 20px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .head img {
@@ -73,8 +81,14 @@ export default {
     cursor: pointer;
 }
 
-.select {
+.head input {
+    margin-left: 20px;
+    width: 200px;
+    border: 2px solid crimson;
+}
+
+/* .select {
     margin-left: 20px;
     width: 100px;
-}
+} */
 </style>
