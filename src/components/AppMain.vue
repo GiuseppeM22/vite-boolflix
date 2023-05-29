@@ -10,12 +10,15 @@ export default {
         }
     },
     methods: {
-        // changeLang(vote) {
+        // changeLang() {
         //     for (let i = 0; i < this.store.films.length; i++) {
         //         const langEle = this.store.films[i];
-        //         let vote = Math.round(langEle.vote_average / 2)
-        //         console.log(vote)
+        //         let flag = langEle.original_language
+        //         console.log(flag);
 
+        //         if (flag == 'en') {
+        //             flag == 'gb'
+        //         }
         //     }
         // }
     }

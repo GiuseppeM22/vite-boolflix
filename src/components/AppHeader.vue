@@ -19,9 +19,7 @@ export default {
             this.store.apiUrl = 'https://api.themoviedb.org/3/search/movie?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.Utente
             axios.get(this.store.apiUrl).then((risp) => {
                 const risposta = risp.data.results
-                console.log(risposta)
                 this.store.films = risposta
-                console.log("mio film", this.store.films)
 
 
             })
@@ -30,16 +28,12 @@ export default {
             this.store.apiSeriesUrl = 'https://api.themoviedb.org/3/search/tv?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.Utente
             axios.get(this.store.apiSeriesUrl).then((risp) => {
                 const risposta = risp.data.results
-                console.log(risposta)
                 this.store.series = risposta
-                console.log("mio serie", this.store.series)
             })
         }
 
     },
-    mounted() {
-        console.log(this.prova);
-    }
+
 }
 
 </script>
@@ -62,7 +56,7 @@ export default {
 }
 
 .center {
-    height: 100vh;
+    height: calc(100vh - 50px);
     display: flex;
     align-items: center;
     justify-content: center;
