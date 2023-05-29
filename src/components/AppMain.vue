@@ -6,17 +6,18 @@ export default {
     data() {
         return {
             store,
+            stelle: 5,
         }
     },
     methods: {
-        changeLang() {
-            for (let i = 0; i < this.store.films.length; i++) {
-                const langEle = this.store.films[i];
-                let vote = Math.ceil(langEle.vote_average).toFixed()
-                console.log(vote)
+        // changeLang(vote) {
+        //     for (let i = 0; i < this.store.films.length; i++) {
+        //         const langEle = this.store.films[i];
+        //         let vote = Math.round(langEle.vote_average / 2)
+        //         console.log(vote)
 
-            }
-        }
+        //     }
+        // }
     }
 
 }
@@ -25,16 +26,50 @@ export default {
 <template>
     <section class="bg_orange">
         <div class="whiteContainer">
-            <h3>Found {{ store.films.length }} film</h3>
+            <!-- generazione in pagina dei film -->
+            <h3 class="found" v-if="store.films.length > 0">FOUND {{ store.films.length }} FILMS</h3>
             <div class="cardsContainer">
                 <div v-for="film in store.films" class="carde">
-                    <img class="poster" :src="`https://image.tmdb.org/t/p/w500/${film.poster_path}`" :alt="`${film.title}`">
+                    <img v-if="film.poster_path" class="poster" :src="`https://image.tmdb.org/t/p/w500/${film.poster_path}`"
+                        :alt="`${film.title}`">
+                    <img v-else="" class="poster"
+                        src="https://www.molecular-uk.com/wp-content/uploads/2021/11/image-coming-soon-placeholder.png"
+                        alt="">
                     <div class="infoContainer ">
-                        <p class="name">{{ film.title }}</p>
-                        <p class="type">{{ film.original_title }}</p>
+                        <h3 class="name">{{ film.title }}</h3>
+                        <h4 class="type">{{ film.original_title }}</h4>
                         <p class="type">{{ film.original_language }}</p>
                         <img class="flag" :src="`https://flagcdn.com/${film.original_language}.svg`" alt="">
-                        <p class="type">{{ film.vote_average.toFixed() }}</p>
+                        <div class="stars">
+                            <span>Rated:</span>
+                            <template v-for="i in 5">
+                                <i v-if="i <= Math.round(film.vote_average / 2)" class="fa-solid fa-star star"></i>
+                                <i v-else="" class="fa-regular fa-star star"></i>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- generazione in pagina delle serie -->
+            <h3 class="found" v-if="store.series.length > 0">FOUND {{ store.series.length }} SERIES</h3>
+            <div class="cardsContainer">
+                <div v-for="serie in store.series" class="carde">
+                    <img v-if="serie.poster_path" class="poster"
+                        :src="`https://image.tmdb.org/t/p/w500/${serie.poster_path}`" :alt="`${serie.name}`">
+                    <img v-else="" class="poster"
+                        src="https://www.molecular-uk.com/wp-content/uploads/2021/11/image-coming-soon-placeholder.png"
+                        alt="">
+                    <div class="infoContainer ">
+                        <h3 class="name">{{ serie.name }}</h3>
+                        <h4 class="type">{{ serie.original_language }}</h4>
+                        <img class="flag" :src="`https://flagcdn.com/${serie.original_language}.svg`" alt="">
+                        <div class="stars">
+                            <span>Rated:</span>
+                            <template v-for="i in 5">
+                                <i v-if="i <= Math.round(serie.vote_average / 2)" class="fa-solid fa-star star"></i>
+                                <i v-else="" class="fa-regular fa-star star"></i>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +79,7 @@ export default {
 
 <style scoped>
 .bg_orange {
-    background-color: #222;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,14 +89,22 @@ export default {
 .whiteContainer {
     width: 80%;
     height: 80%;
-    background-color: white;
+    background-color: black;
 
+}
+
+.whiteContainer span {
+    color: white;
+    margin-right: 5px;
+}
+
+.found {
+    padding: 20px;
 }
 
 h3 {
     background-color: black;
     color: white;
-    padding: 20px;
 }
 
 .cardsContainer {
@@ -125,5 +168,13 @@ h3 {
     visibility: visible;
     cursor: pointer;
 
+}
+
+.stars {
+    margin: 20px;
+}
+
+.star {
+    color: yellow;
 }
 </style>

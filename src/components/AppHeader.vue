@@ -7,30 +7,33 @@ export default {
     data() {
         return {
             store,
-            filmUtente: "",
-            serieUtente: ""
+            Utente: "",
         }
     },
     methods: {
+        startSearch() {
+            this.filmGen()
+            this.seriesGen()
+        },
         filmGen() {
-            this.store.apiUrl = 'https://api.themoviedb.org/3/search/movie?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.filmUtente
+            this.store.apiUrl = 'https://api.themoviedb.org/3/search/movie?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.Utente
             axios.get(this.store.apiUrl).then((risp) => {
                 const risposta = risp.data.results
                 console.log(risposta)
                 this.store.films = risposta
                 console.log("mio film", this.store.films)
 
-                // this.store.apiSeriesUrl = 'https://api.themoviedb.org/3/search/tv?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.serieUtente
-                // axios.get(this.store.apiSeriesUrl).then((risp) => {
-                //     const risposta = risp.data.results
-                //     console.log(risposta)
-                //     this.store.series = risposta
-                //     console.log("mio serie", this.store.series)
-                // })
+
             })
         },
         seriesGen() {
-
+            this.store.apiSeriesUrl = 'https://api.themoviedb.org/3/search/tv?api_key=5c25232faab1c5179701ebf291d09238&query=' + this.Utente
+            axios.get(this.store.apiSeriesUrl).then((risp) => {
+                const risposta = risp.data.results
+                console.log(risposta)
+                this.store.series = risposta
+                console.log("mio serie", this.store.series)
+            })
         }
 
     },
@@ -42,11 +45,10 @@ export default {
 </script>
 <template>
     <section>
-        <div class="head">
+        <div :class="(this.store.films <= 0) ? 'center' : 'head'">
             <h1>Boolflix</h1>
-            <div class="inputContainer">
-                <input @keyup="filmGen" v-model="filmUtente" type="text" placeholder="cerca il film">
-                <button @click="filmGen()">Clicca per cercare i film</button>
+            <div class=" inputContainer">
+                <input @keyup="startSearch" v-model="Utente" type="text" placeholder="cosa vuoi guardare">
             </div>
         </div>
     </section>
@@ -56,7 +58,15 @@ export default {
     display: flex;
     padding: 20px;
     align-items: center;
-    justify-content: space-between;
+    background-color: black;
+}
+
+.center {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
 }
 
 .head img {
@@ -67,6 +77,14 @@ export default {
 
 .head h1 {
     font-size: 30px;
+    color: red;
+    margin-left: 150px;
+}
+
+.center h1 {
+    font-size: 30px;
+    color: red;
+    margin-left: 150px;
 }
 
 .head button {
@@ -83,8 +101,34 @@ export default {
 
 .head input {
     margin-left: 20px;
-    width: 200px;
-    border: 2px solid crimson;
+    width: 266px;
+    border: 2px solid red;
+    height: 30px;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.center button {
+    background-color: crimson;
+    color: black;
+    margin-left: 20px;
+    padding: 10px 35px;
+    font-size: 18px;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.center input {
+    margin-left: 20px;
+    width: 266px;
+    border: 2px solid red;
+    height: 30px;
+    border-radius: 10px;
+    padding: 10px;
+
 }
 
 /* .select {

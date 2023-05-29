@@ -6,6 +6,6 @@ export const store = reactive({
     apiUrl: '',
     apiSeriesUrl: '',
     films: [],
-    series: []
+    series: [],
 })
 
