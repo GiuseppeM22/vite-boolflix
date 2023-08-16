@@ -174,7 +174,7 @@ h3 {
 }
 
 .stars {
-    margin: 20px;
+    margin-top: 5px;
 }
 
 .star {
